@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pagination</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.min.css')}}">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-8 py-5">
+             {%for member in members.items%}
+              <h1 class="bg-info">{{member.name}}</h1>
+              <p class="text-danger">{{member.desc}}</p>
+             {%endfor%}
+             {%if members.has_prev%}
+             <a href="{{url_for('index',page=members.prev_num)}}" 
+                class="btn btn-sm btn-outline-info">prev</a>
+             {%endif%}
+             {%for page_num in members.iter_pages()%}
+              {%if page_num%}
+               {%if members.page==page_num%}
+                 <a href="{{url_for('index',page=page_num)}}" 
+                 class="btn btn-sm btn-info">{{page_num}}</a>
+                 {%else%}
+                 <a href="{{url_for('index',page=page_num)}}" 
+                 class="btn btn-sm btn-outline-info">{{page_num}}</a>
+               {%endif%}
+               {%else%}
+                ...
+              {%endif%}
+             {%endfor%}
+             {%if members.has_next%}
+             <a href="{{url_for('index',page=members.next_num)}}" 
+                class="btn btn-sm btn-outline-info">next</a>
+             {%endif%}
+          </div>
+          <div class="col-md-2"></div>
+        </div>      
+    </div>
+</body>
+</html>
